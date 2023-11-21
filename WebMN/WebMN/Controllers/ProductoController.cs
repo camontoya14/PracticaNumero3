@@ -82,34 +82,35 @@ namespace WebMN.Controllers
         }
 
         [HttpPost]
-        public ActionResult ActualizarProducto(ProductoEnt entidad, HttpPostedFileBase NuevaImgProducto)
+        public ActionResult ActualizarProducto(HttpPostedFileBase ImgProducto, ProductoEnt entidad)
         {
             entidad.Imagen = string.Empty;
             entidad.Estado = true;
 
-            if (NuevaImgProducto != null && NuevaImgProducto.ContentLength > 0)
+
+
+            string directorioImagenes = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
+
+            string[] archivosAEliminar = Directory.GetFiles(directorioImagenes, entidad.ConProducto + ".*");
+
+            foreach (string archivo in archivosAEliminar)
             {
-                if (!string.IsNullOrEmpty(entidad.Imagen))
-                {
-                    string rutaImagenAnterior = AppDomain.CurrentDomain.BaseDirectory + entidad.Imagen.Replace("/", "\\");
-                    if (System.IO.File.Exists(rutaImagenAnterior))
-                    {
-                        System.IO.File.Delete(rutaImagenAnterior);
-                    }
-                }
-
-                string extension = Path.GetExtension(Path.GetFileName(NuevaImgProducto.FileName));
-                string rutaNuevaImagen = AppDomain.CurrentDomain.BaseDirectory + "Images\\" + entidad.ConProducto + extension;
-
-                if (System.IO.File.Exists(rutaNuevaImagen))
-                {
-                    System.IO.File.Delete(rutaNuevaImagen);
-                }
-
-                NuevaImgProducto.SaveAs(rutaNuevaImagen);
-
-                entidad.Imagen = "/Images/" + entidad.ConProducto + extension;
+                System.IO.File.Delete(archivo);
             }
+           
+
+            string extension = Path.GetExtension(Path.GetFileName(ImgProducto.FileName));
+            string rutaNuevaImagen = AppDomain.CurrentDomain.BaseDirectory + "Images\\" + entidad.ConProducto + extension;
+
+            if (System.IO.File.Exists(rutaNuevaImagen))
+            {
+                System.IO.File.Delete(rutaNuevaImagen);
+            }
+
+            ImgProducto.SaveAs(rutaNuevaImagen);
+
+            entidad.Imagen = "/Images/" + entidad.ConProducto + extension;
+            
 
             var resp = productoModel.ActualizarProducto(entidad);
 
