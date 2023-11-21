@@ -1,0 +1,49 @@
+﻿﻿@model WebMN.Entities.UsuarioEnt
+
+@{
+    ViewBag.Title = "ActualizarUsuario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Información Del Usuario</h4>
+
+            @if (ViewBag.MensajeUsuario != null)
+            {
+                <div class="alert alert-info" role="alert" style="text-align:center">
+                    @ViewBag.MensajeUsuario
+                </div>
+            }
+
+            @using (Html.BeginForm("ActualizarUsuario", "Usuario", FormMethod.Post, new { @class = "pt-3" }))
+            {
+
+                @Html.HiddenFor(m => m.ConUsuario)
+
+                <div class="form-group">
+                    <label for="exampleInputName1">Identificación</label>
+                    @Html.TextBoxFor(m => m.Identificacion, new { @onkeyup = "ConsultarNombre()", @class = "form-control form-control-lg", @type = "text", placeholder = "Identificación" })
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail3">Nombre</label>
+                    @Html.TextBoxFor(m => m.Nombre, new { @readonly = "@readonly", style = "background-color:#eeeeee", @class = "form-control form-control-lg", @type = "text", placeholder = "Nombre" })
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword4">Correo Electrónico</label>
+                    @Html.TextBoxFor(m => m.Correo, new { @class = "form-control form-control-lg", @type = "email", @placeholder = "Correo Electrónico" })
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword4">Provincia</label>
+                    @Html.DropDownListFor(m => m.ConProvincia, ViewBag.Provincias as List<SelectListItem>, new { @class = "form-control form-control-lg", @type = "text", @placeholder = "Provincia" })
+                </div>
+
+                <button type="submit" class="btn btn-primary mr-2">Procesar</button>
+            }
+
+        </div>
+    </div>
+</div>
+
+<script src="~/Funciones/ConsultarNombresApi.js"></script>

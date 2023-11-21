@@ -1,0 +1,45 @@
+﻿﻿@model WebMN.Entities.UsuarioEnt
+
+@{
+    ViewBag.Title = "IniciarSesion";
+    Layout = "~/Views/Shared/_Layout_Login.cshtml";
+}
+
+<div class="content-wrapper d-flex align-items-center auth px-0">
+    <div class="row w-100 mx-0">
+        <div class="col-lg-4 mx-auto">
+            <div class="auth-form-light text-left py-5 px-4 px-sm-5">
+                <div class="brand-logo">
+                    <img src="~/template/images/logo.svg" alt="logo">
+                </div>
+
+                @if (ViewBag.MensajeUsuario != null)
+                {
+                    <div class="alert alert-info" role="alert" style="text-align:center">
+                        @ViewBag.MensajeUsuario
+                    </div>
+                }
+
+                @using (Html.BeginForm("IniciarSesion", "Login", FormMethod.Post, new { @class = "pt-3" }))
+                {
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.Correo, new { @class = "form-control form-control-lg", @type = "email", @placeholder = "Correo Electrónico" })
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.Contrasenna, new { @class = "form-control form-control-lg", @type = "password", placeholder = "Contraseña" })
+                    </div>
+                    <div class="mt-3">
+                        <input type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" value="INICIAR SESIÓN">
+                    </div>
+
+                    <div class="text-center mt-4 font-weight-light">
+                        ¿No tienes una cuenta? <a href="@Url.Action("RegistrarCuenta","Login")" class="text-primary">Registrarse</a>
+                        <br />
+                        ¿Olvidaste tu contraseña? <a href="@Url.Action("RecuperarCuenta","Login")" class="text-primary">Recuperar</a>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

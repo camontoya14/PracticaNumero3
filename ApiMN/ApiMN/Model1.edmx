@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BDMNModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TProducto">
+          <Key>
+            <PropertyRef Name="ConProducto" />
+          </Key>
+          <Property Name="ConProducto" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Precio" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="Imagen" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TProvincia">
+          <Key>
+            <PropertyRef Name="ConProvincia" />
+          </Key>
+          <Property Name="ConProvincia" Type="bigint" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TRol">
+          <Key>
+            <PropertyRef Name="ConRol" />
+          </Key>
+          <Property Name="ConRol" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TUsuario">
+          <Key>
+            <PropertyRef Name="ConUsuario" />
+          </Key>
+          <Property Name="ConUsuario" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Identificacion" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Correo" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Contrasenna" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Estado" Type="bit" Nullable="false" />
+          <Property Name="ConRol" Type="bigint" Nullable="false" />
+          <Property Name="ConProvincia" Type="bigint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_TUsuario_TProvincia">
+          <End Role="TProvincia" Type="Self.TProvincia" Multiplicity="1" />
+          <End Role="TUsuario" Type="Self.TUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TProvincia">
+              <PropertyRef Name="ConProvincia" />
+            </Principal>
+            <Dependent Role="TUsuario">
+              <PropertyRef Name="ConProvincia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TUsuario_TRol">
+          <End Role="TRol" Type="Self.TRol" Multiplicity="1" />
+          <End Role="TUsuario" Type="Self.TUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRol">
+              <PropertyRef Name="ConRol" />
+            </Principal>
+            <Dependent Role="TUsuario">
+              <PropertyRef Name="ConRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="IniciarSesion_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Correo" Type="varchar" Mode="In" />
+          <Parameter Name="Contrasenna" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="RegistrarCuenta_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Identificacion" Type="varchar" Mode="In" />
+          <Parameter Name="Nombre" Type="varchar" Mode="In" />
+          <Parameter Name="Correo" Type="varchar" Mode="In" />
+          <Parameter Name="Contrasenna" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="BDMNModelStoreContainer">
+          <EntitySet Name="TProducto" EntityType="Self.TProducto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TProvincia" EntityType="Self.TProvincia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TRol" EntityType="Self.TRol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TUsuario" EntityType="Self.TUsuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_TUsuario_TProvincia" Association="Self.FK_TUsuario_TProvincia">
+            <End Role="TProvincia" EntitySet="TProvincia" />
+            <End Role="TUsuario" EntitySet="TUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TUsuario_TRol" Association="Self.FK_TUsuario_TRol">
+            <End Role="TRol" EntitySet="TRol" />
+            <End Role="TUsuario" EntitySet="TUsuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BDMNModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TProducto">
+          <Key>
+            <PropertyRef Name="ConProducto" />
+          </Key>
+          <Property Name="ConProducto" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Precio" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="Imagen" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TProvincia">
+          <Key>
+            <PropertyRef Name="ConProvincia" />
+          </Key>
+          <Property Name="ConProvincia" Type="Int64" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TUsuario" Relationship="Self.FK_TUsuario_TProvincia" FromRole="TProvincia" ToRole="TUsuario" />
+        </EntityType>
+        <EntityType Name="TRol">
+          <Key>
+            <PropertyRef Name="ConRol" />
+          </Key>
+          <Property Name="ConRol" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TUsuario" Relationship="Self.FK_TUsuario_TRol" FromRole="TRol" ToRole="TUsuario" />
+        </EntityType>
+        <EntityType Name="TUsuario">
+          <Key>
+            <PropertyRef Name="ConUsuario" />
+          </Key>
+          <Property Name="ConUsuario" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Identificacion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Contrasenna" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Estado" Type="Boolean" Nullable="false" />
+          <Property Name="ConRol" Type="Int64" Nullable="false" />
+          <Property Name="ConProvincia" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="TProvincia" Relationship="Self.FK_TUsuario_TProvincia" FromRole="TUsuario" ToRole="TProvincia" />
+          <NavigationProperty Name="TRol" Relationship="Self.FK_TUsuario_TRol" FromRole="TUsuario" ToRole="TRol" />
+        </EntityType>
+        <Association Name="FK_TUsuario_TProvincia">
+          <End Role="TProvincia" Type="Self.TProvincia" Multiplicity="1" />
+          <End Role="TUsuario" Type="Self.TUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TProvincia">
+              <PropertyRef Name="ConProvincia" />
+            </Principal>
+            <Dependent Role="TUsuario">
+              <PropertyRef Name="ConProvincia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TUsuario_TRol">
+          <End Role="TRol" Type="Self.TRol" Multiplicity="1" />
+          <End Role="TUsuario" Type="Self.TUsuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRol">
+              <PropertyRef Name="ConRol" />
+            </Principal>
+            <Dependent Role="TUsuario">
+              <PropertyRef Name="ConRol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BDMNEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TProducto" EntityType="Self.TProducto" />
+          <EntitySet Name="TProvincia" EntityType="Self.TProvincia" />
+          <EntitySet Name="TRol" EntityType="Self.TRol" />
+          <EntitySet Name="TUsuario" EntityType="Self.TUsuario" />
+          <AssociationSet Name="FK_TUsuario_TProvincia" Association="Self.FK_TUsuario_TProvincia">
+            <End Role="TProvincia" EntitySet="TProvincia" />
+            <End Role="TUsuario" EntitySet="TUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TUsuario_TRol" Association="Self.FK_TUsuario_TRol">
+            <End Role="TRol" EntitySet="TRol" />
+            <End Role="TUsuario" EntitySet="TUsuario" />
+          </AssociationSet>
+          <FunctionImport Name="IniciarSesion_SP" ReturnType="Collection(BDMNModel.IniciarSesion_SP_Result)">
+            <Parameter Name="Correo" Mode="In" Type="String" />
+            <Parameter Name="Contrasenna" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="RegistrarCuenta_SP">
+            <Parameter Name="Identificacion" Mode="In" Type="String" />
+            <Parameter Name="Nombre" Mode="In" Type="String" />
+            <Parameter Name="Correo" Mode="In" Type="String" />
+            <Parameter Name="Contrasenna" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="IniciarSesion_SP_Result">
+          <Property Type="Int64" Name="ConUsuario" Nullable="false" />
+          <Property Type="String" Name="Identificacion" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Correo" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Contrasenna" Nullable="false" MaxLength="20" />
+          <Property Type="Boolean" Name="Estado" Nullable="false" />
+          <Property Type="String" Name="DescripcionProvincia" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="DescripcionRol" Nullable="false" MaxLength="100" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BDMNModelStoreContainer" CdmEntityContainer="BDMNEntities">
+          <EntitySetMapping Name="TProducto">
+            <EntityTypeMapping TypeName="BDMNModel.TProducto">
+              <MappingFragment StoreEntitySet="TProducto">
+                <ScalarProperty Name="ConProducto" ColumnName="ConProducto" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TProvincia">
+            <EntityTypeMapping TypeName="BDMNModel.TProvincia">
+              <MappingFragment StoreEntitySet="TProvincia">
+                <ScalarProperty Name="ConProvincia" ColumnName="ConProvincia" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRol">
+            <EntityTypeMapping TypeName="BDMNModel.TRol">
+              <MappingFragment StoreEntitySet="TRol">
+                <ScalarProperty Name="ConRol" ColumnName="ConRol" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TUsuario">
+            <EntityTypeMapping TypeName="BDMNModel.TUsuario">
+              <MappingFragment StoreEntitySet="TUsuario">
+                <ScalarProperty Name="ConUsuario" ColumnName="ConUsuario" />
+                <ScalarProperty Name="Identificacion" ColumnName="Identificacion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Contrasenna" ColumnName="Contrasenna" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="ConRol" ColumnName="ConRol" />
+                <ScalarProperty Name="ConProvincia" ColumnName="ConProvincia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="IniciarSesion_SP" FunctionName="BDMNModel.Store.IniciarSesion_SP">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="BDMNModel.IniciarSesion_SP_Result">
+                <ScalarProperty Name="ConUsuario" ColumnName="ConUsuario" />
+                <ScalarProperty Name="Identificacion" ColumnName="Identificacion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Contrasenna" ColumnName="Contrasenna" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="DescripcionProvincia" ColumnName="DescripcionProvincia" />
+                <ScalarProperty Name="DescripcionRol" ColumnName="DescripcionRol" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RegistrarCuenta_SP" FunctionName="BDMNModel.Store.RegistrarCuenta_SP" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

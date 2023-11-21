@@ -1,0 +1,27 @@
+﻿﻿@model List<WebMN.Entities.ProductoEnt>
+
+@{
+    ViewBag.Title = "ConsultaProductos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@foreach (var item in Model)
+{
+    <div class="col-3">
+        <div class="card text-center">
+            <div class="card-body">
+
+                <img src="@item.Imagen" width="200" height="150"><br><br>
+                <h5 class="card-title">@item.Nombre</h5>
+                <p class="card-text">@item.Descripcion</p>
+                <p class="card-text">Unidades: @item.Cantidad - ¢ @item.Precio</p>
+
+                @if (Session["ConUsuario"] != null)
+                {
+                    <a href="#" class="btn btn-primary"><i class="fa fa-cart-plus"></i></a>
+                }
+
+            </div>
+        </div>
+    </div>
+}

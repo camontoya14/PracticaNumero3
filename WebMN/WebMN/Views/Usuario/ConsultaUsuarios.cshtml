@@ -1,0 +1,50 @@
+﻿﻿@model List<WebMN.Entities.UsuarioEnt>
+
+@{
+    ViewBag.Title = "ConsultaUsuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Información de Usuarios</h4>
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Identificación</th>
+                        <th>Nombre</th>
+                        <th>Correo Electrónico</th>
+                        <th>Estado</th>
+                        <th>Cambiar Estado</th>
+                        <th>Actualizar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Identificacion</td>
+                            <td>@item.Nombre</td>
+                            <td>@item.Correo</td>
+
+                            @if (item.Estado)
+                            {
+                                <td>Activo</td>
+                            }
+                            else
+                            {
+                                <td>Inactivo</td>
+                            }
+
+                            <td style="text-align:center"><a href="@Url.Action("ActualizarEstadoUsuario","Usuario", new { q = item.ConUsuario })"><i class="fa fa-exchange fa-lg"></i></a></td>
+                            <td style="text-align:center"><a href="@Url.Action("ActualizarUsuario","Usuario", new { q = item.ConUsuario })"><i class="fa fa-user fa-lg"></i></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
