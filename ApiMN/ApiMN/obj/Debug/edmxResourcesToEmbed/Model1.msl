@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BDMNModelStoreContainer" CdmEntityContainer="BDMNEntities">
+    <EntitySetMapping Name="TCarrito">
+      <EntityTypeMapping TypeName="BDMNModel.TCarrito">
+        <MappingFragment StoreEntitySet="TCarrito">
+          <ScalarProperty Name="ConCarrito" ColumnName="ConCarrito" />
+          <ScalarProperty Name="ConUsuario" ColumnName="ConUsuario" />
+          <ScalarProperty Name="ConProducto" ColumnName="ConProducto" />
+          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+          <ScalarProperty Name="FechaCarrito" ColumnName="FechaCarrito" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TProducto">
+      <EntityTypeMapping TypeName="BDMNModel.TProducto">
+        <MappingFragment StoreEntitySet="TProducto">
+          <ScalarProperty Name="ConProducto" ColumnName="ConProducto" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Precio" ColumnName="Precio" />
+          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+          <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TProvincia">
+      <EntityTypeMapping TypeName="BDMNModel.TProvincia">
+        <MappingFragment StoreEntitySet="TProvincia">
+          <ScalarProperty Name="ConProvincia" ColumnName="ConProvincia" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TRol">
+      <EntityTypeMapping TypeName="BDMNModel.TRol">
+        <MappingFragment StoreEntitySet="TRol">
+          <ScalarProperty Name="ConRol" ColumnName="ConRol" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TUsuario">
+      <EntityTypeMapping TypeName="BDMNModel.TUsuario">
+        <MappingFragment StoreEntitySet="TUsuario">
+          <ScalarProperty Name="ConUsuario" ColumnName="ConUsuario" />
+          <ScalarProperty Name="Identificacion" ColumnName="Identificacion" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Correo" ColumnName="Correo" />
+          <ScalarProperty Name="Contrasenna" ColumnName="Contrasenna" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="ConRol" ColumnName="ConRol" />
+          <ScalarProperty Name="ConProvincia" ColumnName="ConProvincia" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="IniciarSesion_SP" FunctionName="BDMNModel.Store.IniciarSesion_SP">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BDMNModel.IniciarSesion_SP_Result">
+          <ScalarProperty Name="ConUsuario" ColumnName="ConUsuario" />
+          <ScalarProperty Name="Identificacion" ColumnName="Identificacion" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Correo" ColumnName="Correo" />
+          <ScalarProperty Name="Contrasenna" ColumnName="Contrasenna" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="DescripcionProvincia" ColumnName="DescripcionProvincia" />
+          <ScalarProperty Name="DescripcionRol" ColumnName="DescripcionRol" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="RegistrarCuenta_SP" FunctionName="BDMNModel.Store.RegistrarCuenta_SP" />
+  </EntityContainerMapping>
+</Mapping>

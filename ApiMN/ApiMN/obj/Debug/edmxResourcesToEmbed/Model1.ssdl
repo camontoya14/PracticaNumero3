@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BDMNModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="TCarrito">
+    <Key>
+      <PropertyRef Name="ConCarrito" />
+    </Key>
+    <Property Name="ConCarrito" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ConUsuario" Type="bigint" Nullable="false" />
+    <Property Name="ConProducto" Type="bigint" Nullable="false" />
+    <Property Name="Cantidad" Type="int" Nullable="false" />
+    <Property Name="FechaCarrito" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TProducto">
+    <Key>
+      <PropertyRef Name="ConProducto" />
+    </Key>
+    <Property Name="ConProducto" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="Precio" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Cantidad" Type="int" Nullable="false" />
+    <Property Name="Imagen" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="Estado" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TProvincia">
+    <Key>
+      <PropertyRef Name="ConProvincia" />
+    </Key>
+    <Property Name="ConProvincia" Type="bigint" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TRol">
+    <Key>
+      <PropertyRef Name="ConRol" />
+    </Key>
+    <Property Name="ConRol" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TUsuario">
+    <Key>
+      <PropertyRef Name="ConUsuario" />
+    </Key>
+    <Property Name="ConUsuario" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Identificacion" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Correo" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Contrasenna" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Estado" Type="bit" Nullable="false" />
+    <Property Name="ConRol" Type="bigint" Nullable="false" />
+    <Property Name="ConProvincia" Type="bigint" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_TCarrito_TProducto">
+    <End Role="TProducto" Type="Self.TProducto" Multiplicity="1" />
+    <End Role="TCarrito" Type="Self.TCarrito" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TProducto">
+        <PropertyRef Name="ConProducto" />
+      </Principal>
+      <Dependent Role="TCarrito">
+        <PropertyRef Name="ConProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TCarrito_TUsuario">
+    <End Role="TUsuario" Type="Self.TUsuario" Multiplicity="1" />
+    <End Role="TCarrito" Type="Self.TCarrito" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TUsuario">
+        <PropertyRef Name="ConUsuario" />
+      </Principal>
+      <Dependent Role="TCarrito">
+        <PropertyRef Name="ConUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TUsuario_TProvincia">
+    <End Role="TProvincia" Type="Self.TProvincia" Multiplicity="1" />
+    <End Role="TUsuario" Type="Self.TUsuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TProvincia">
+        <PropertyRef Name="ConProvincia" />
+      </Principal>
+      <Dependent Role="TUsuario">
+        <PropertyRef Name="ConProvincia" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TUsuario_TRol">
+    <End Role="TRol" Type="Self.TRol" Multiplicity="1" />
+    <End Role="TUsuario" Type="Self.TUsuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TRol">
+        <PropertyRef Name="ConRol" />
+      </Principal>
+      <Dependent Role="TUsuario">
+        <PropertyRef Name="ConRol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="IniciarSesion_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Correo" Type="varchar" Mode="In" />
+    <Parameter Name="Contrasenna" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="RegistrarCuenta_SP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Identificacion" Type="varchar" Mode="In" />
+    <Parameter Name="Nombre" Type="varchar" Mode="In" />
+    <Parameter Name="Correo" Type="varchar" Mode="In" />
+    <Parameter Name="Contrasenna" Type="varchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="BDMNModelStoreContainer">
+    <EntitySet Name="TCarrito" EntityType="Self.TCarrito" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TProducto" EntityType="Self.TProducto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TProvincia" EntityType="Self.TProvincia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TRol" EntityType="Self.TRol" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TUsuario" EntityType="Self.TUsuario" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_TCarrito_TProducto" Association="Self.FK_TCarrito_TProducto">
+      <End Role="TProducto" EntitySet="TProducto" />
+      <End Role="TCarrito" EntitySet="TCarrito" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TCarrito_TUsuario" Association="Self.FK_TCarrito_TUsuario">
+      <End Role="TUsuario" EntitySet="TUsuario" />
+      <End Role="TCarrito" EntitySet="TCarrito" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TUsuario_TProvincia" Association="Self.FK_TUsuario_TProvincia">
+      <End Role="TProvincia" EntitySet="TProvincia" />
+      <End Role="TUsuario" EntitySet="TUsuario" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TUsuario_TRol" Association="Self.FK_TUsuario_TRol">
+      <End Role="TRol" EntitySet="TRol" />
+      <End Role="TUsuario" EntitySet="TUsuario" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

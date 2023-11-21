@@ -4,11 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="cde8a059666548bea0061d0315798252" Name="Diagram1">
-        <EntityTypeShape EntityType="BDMNModel.TProducto" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="BDMNModel.TProvincia" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="BDMNModel.TRol" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
+      <Diagram DiagramId="c3dfc71839094f8f8991befae18c1a9c" Name="Diagram1">
+        <EntityTypeShape EntityType="BDMNModel.TCarrito" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDMNModel.TProducto" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDMNModel.TProvincia" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BDMNModel.TRol" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="BDMNModel.TUsuario" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="BDMNModel.FK_TCarrito_TProducto" ManuallyRouted="false" />
+        <AssociationConnector Association="BDMNModel.FK_TCarrito_TUsuario" ManuallyRouted="false" />
         <AssociationConnector Association="BDMNModel.FK_TUsuario_TProvincia" ManuallyRouted="false" />
         <AssociationConnector Association="BDMNModel.FK_TUsuario_TRol" ManuallyRouted="false" />
       </Diagram>

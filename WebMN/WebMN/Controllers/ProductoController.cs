@@ -84,6 +84,9 @@ namespace WebMN.Controllers
         [HttpPost]
         public ActionResult ActualizarProducto(ProductoEnt entidad, HttpPostedFileBase NuevaImgProducto)
         {
+            entidad.Imagen = string.Empty;
+            entidad.Estado = true;
+
             if (NuevaImgProducto != null && NuevaImgProducto.ContentLength > 0)
             {
                 if (!string.IsNullOrEmpty(entidad.Imagen))

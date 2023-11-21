@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BDMNModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="TCarrito">
+    <Key>
+      <PropertyRef Name="ConCarrito" />
+    </Key>
+    <Property Name="ConCarrito" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ConUsuario" Type="Int64" Nullable="false" />
+    <Property Name="ConProducto" Type="Int64" Nullable="false" />
+    <Property Name="Cantidad" Type="Int32" Nullable="false" />
+    <Property Name="FechaCarrito" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="TProducto" Relationship="Self.FK_TCarrito_TProducto" FromRole="TCarrito" ToRole="TProducto" />
+    <NavigationProperty Name="TUsuario" Relationship="Self.FK_TCarrito_TUsuario" FromRole="TCarrito" ToRole="TUsuario" />
+  </EntityType>
+  <EntityType Name="TProducto">
+    <Key>
+      <PropertyRef Name="ConProducto" />
+    </Key>
+    <Property Name="ConProducto" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Precio" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Cantidad" Type="Int32" Nullable="false" />
+    <Property Name="Imagen" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Estado" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="TCarrito" Relationship="Self.FK_TCarrito_TProducto" FromRole="TProducto" ToRole="TCarrito" />
+  </EntityType>
+  <EntityType Name="TProvincia">
+    <Key>
+      <PropertyRef Name="ConProvincia" />
+    </Key>
+    <Property Name="ConProvincia" Type="Int64" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="TUsuario" Relationship="Self.FK_TUsuario_TProvincia" FromRole="TProvincia" ToRole="TUsuario" />
+  </EntityType>
+  <EntityType Name="TRol">
+    <Key>
+      <PropertyRef Name="ConRol" />
+    </Key>
+    <Property Name="ConRol" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="TUsuario" Relationship="Self.FK_TUsuario_TRol" FromRole="TRol" ToRole="TUsuario" />
+  </EntityType>
+  <EntityType Name="TUsuario">
+    <Key>
+      <PropertyRef Name="ConUsuario" />
+    </Key>
+    <Property Name="ConUsuario" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Identificacion" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Correo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Contrasenna" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Estado" Type="Boolean" Nullable="false" />
+    <Property Name="ConRol" Type="Int64" Nullable="false" />
+    <Property Name="ConProvincia" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="TCarrito" Relationship="Self.FK_TCarrito_TUsuario" FromRole="TUsuario" ToRole="TCarrito" />
+    <NavigationProperty Name="TProvincia" Relationship="Self.FK_TUsuario_TProvincia" FromRole="TUsuario" ToRole="TProvincia" />
+    <NavigationProperty Name="TRol" Relationship="Self.FK_TUsuario_TRol" FromRole="TUsuario" ToRole="TRol" />
+  </EntityType>
+  <Association Name="FK_TCarrito_TProducto">
+    <End Role="TProducto" Type="Self.TProducto" Multiplicity="1" />
+    <End Role="TCarrito" Type="Self.TCarrito" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TProducto">
+        <PropertyRef Name="ConProducto" />
+      </Principal>
+      <Dependent Role="TCarrito">
+        <PropertyRef Name="ConProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TCarrito_TUsuario">
+    <End Role="TUsuario" Type="Self.TUsuario" Multiplicity="1" />
+    <End Role="TCarrito" Type="Self.TCarrito" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TUsuario">
+        <PropertyRef Name="ConUsuario" />
+      </Principal>
+      <Dependent Role="TCarrito">
+        <PropertyRef Name="ConUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TUsuario_TProvincia">
+    <End Role="TProvincia" Type="Self.TProvincia" Multiplicity="1" />
+    <End Role="TUsuario" Type="Self.TUsuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TProvincia">
+        <PropertyRef Name="ConProvincia" />
+      </Principal>
+      <Dependent Role="TUsuario">
+        <PropertyRef Name="ConProvincia" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TUsuario_TRol">
+    <End Role="TRol" Type="Self.TRol" Multiplicity="1" />
+    <End Role="TUsuario" Type="Self.TUsuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TRol">
+        <PropertyRef Name="ConRol" />
+      </Principal>
+      <Dependent Role="TUsuario">
+        <PropertyRef Name="ConRol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BDMNEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="TCarrito" EntityType="Self.TCarrito" />
+    <EntitySet Name="TProducto" EntityType="Self.TProducto" />
+    <EntitySet Name="TProvincia" EntityType="Self.TProvincia" />
+    <EntitySet Name="TRol" EntityType="Self.TRol" />
+    <EntitySet Name="TUsuario" EntityType="Self.TUsuario" />
+    <AssociationSet Name="FK_TCarrito_TProducto" Association="Self.FK_TCarrito_TProducto">
+      <End Role="TProducto" EntitySet="TProducto" />
+      <End Role="TCarrito" EntitySet="TCarrito" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TCarrito_TUsuario" Association="Self.FK_TCarrito_TUsuario">
+      <End Role="TUsuario" EntitySet="TUsuario" />
+      <End Role="TCarrito" EntitySet="TCarrito" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TUsuario_TProvincia" Association="Self.FK_TUsuario_TProvincia">
+      <End Role="TProvincia" EntitySet="TProvincia" />
+      <End Role="TUsuario" EntitySet="TUsuario" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TUsuario_TRol" Association="Self.FK_TUsuario_TRol">
+      <End Role="TRol" EntitySet="TRol" />
+      <End Role="TUsuario" EntitySet="TUsuario" />
+    </AssociationSet>
+    <FunctionImport Name="IniciarSesion_SP" ReturnType="Collection(BDMNModel.IniciarSesion_SP_Result)">
+      <Parameter Name="Correo" Mode="In" Type="String" />
+      <Parameter Name="Contrasenna" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="RegistrarCuenta_SP">
+      <Parameter Name="Identificacion" Mode="In" Type="String" />
+      <Parameter Name="Nombre" Mode="In" Type="String" />
+      <Parameter Name="Correo" Mode="In" Type="String" />
+      <Parameter Name="Contrasenna" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="IniciarSesion_SP_Result">
+    <Property Type="Int64" Name="ConUsuario" Nullable="false" />
+    <Property Type="String" Name="Identificacion" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="Nombre" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="Correo" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="Contrasenna" Nullable="false" MaxLength="20" />
+    <Property Type="Boolean" Name="Estado" Nullable="false" />
+    <Property Type="String" Name="DescripcionProvincia" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="DescripcionRol" Nullable="false" MaxLength="100" />
+  </ComplexType>
+</Schema>
